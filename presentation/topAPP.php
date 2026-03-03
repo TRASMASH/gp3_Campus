@@ -2,8 +2,8 @@
 require_once '../dialogueBD.php';
 try {
     $undlg = new DialogueBD();
-    $application  = $_POST['nom'];
-    $volume= $_POST['volume'];
+    //$application  = $_POST['nom'];
+    //$volume= $_POST['volume'];
 
     $res =$undlg->getTop5Applications();
 } catch (Exception $ex) {
@@ -24,7 +24,7 @@ if (isset($erreur)) {
     echo "Erreur : $erreur";
 }
 ?>
-<h2>test</h2>
+<h2>Top 5 des application consommatrice</h2>
 <table>
     <?php
     foreach ($res as $ligne) {
