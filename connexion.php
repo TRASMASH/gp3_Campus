@@ -3,7 +3,7 @@ class Connexion {
     private static $cnx = null;
     public static function getConnexion() {
         $dbhost = '127.0.0.1';
-        $dbbase = 'personnel';
+        $dbbase = 'gp3_campus';
         $dbuser = 'usersio';
         $dbpwd = 'sio';
         try {
