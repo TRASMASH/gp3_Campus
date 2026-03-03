@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="gp3_camping" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="gp3_camping">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/LOUREIRO/gp3_camping" local="$PROJECT_DIR$" web="/LOUREIRO/gp3_camping" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
