@@ -2,39 +2,55 @@
 require_once '../dialogueBD.php';
 try {
     $undlg = new DialogueBD();
-    //$application  = $_POST['nom'];
-    //$volume= $_POST['volume'];
+    $res = $undlg->getTop5Applications();
 
-    $res =$undlg->getTop5Applications();
+    // On prépare deux tableaux vides pour le graphique JS
+    $labels_app = [];
+    $data_app = [];
+
+    foreach ($res as $ligne) {
+        $labels_app[] = $ligne['nom'];
+        $data_app[] = round($ligne['total_volume'], 2);
+    }
 } catch (Exception $ex) {
     $erreur = $ex->getMessage();
 }
 ?>
 
+<?php if (isset($erreur)) echo "<p style='color:red;'>Erreur : $erreur</p>"; ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Top 5 des application consommatrice </title>
-</head>
-<body>
-<?php
-if (isset($erreur)) {
-    echo "Erreur : $erreur";
-}
-?>
-<h2>Top 5 des application consommatrice</h2>
+<h2>Top 5 des applications les plus consommatrices</h2>
+
+<div class="chart-container">
+    <canvas id="chartTopApp"></canvas>
+</div>
+
 <table>
-    <?php
-    foreach ($res as $ligne) {
-        $nom1 = $ligne ['nom'];
-        $volume1 = $ligne ['total_volume'];
-
-        echo "<tr><td>$nom1</td><td>$volume1</td></tr> ";
-    }
-
-    ?>
+    <tr>
+        <th>Nom de l'application</th>
+        <th>Consommation Totale</th>
+    </tr>
+    <?php foreach ($res as $ligne): ?>
+        <tr>
+            <td><?= htmlspecialchars($ligne['nom']) ?></td>
+            <td><?= round($ligne['total_volume'], 2) ?></td>
+        </tr>
+    <?php endforeach; ?>
 </table>
-</body>
-</html>
+
+<script>
+    new Chart(document.getElementById('chartTopApp'), {
+        type: 'bar', // Type de graphique (barres)
+        data: {
+            labels: <?= json_encode($labels_app) ?>, // On injecte les noms depuis PHP
+            datasets: [{
+                label: 'Consommation Totale',
+                data: <?= json_encode($data_app) ?>, // On injecte les volumes depuis PHP
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+
+</script>
